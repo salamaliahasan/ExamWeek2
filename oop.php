@@ -14,7 +14,7 @@ class Book {
 
 // TODO: Add getTitle method
 public function getTitle(){
-
+    return $this->title;
 }
 
 
@@ -22,21 +22,26 @@ public function getTitle(){
 
  // TODO: Add getAvailableCopies method
  public function getAvailableCopies(){
-    
+    return $this->availableCopies;
 }
 
 
 
  // TODO: Add borrowBook method
  public function borrowBook(){
-    
+    if ($this->availableCopies > 0) {
+        $this->availableCopies--;
+        return true;
+    } else {
+        return false; // No copies available
+    }
  }
 
 
 
  // TODO: Add returnBook method
  public function returnBook(){
-    
+    $this->availableCopies++;
  }
 }
 
@@ -55,18 +60,18 @@ private $name;
 
  // TODO: Add getName method
  public function getName(){
-    
+    return $this->name;
  }
  // TODO: Add borrowBook method
- public function borrowBook(){
-    
+ public function borrowBook($book){
+    return $book->borrowBook();
  }
 
 
 
  // TODO: Add returnBook method
- public function returnBook(){
-    
+ public function returnBook($book){
+    $book->returnBook();
  }
 }
 
@@ -79,22 +84,43 @@ private $name;
 
 
 // TODO: Create 2 books with the following properties
-Book 1 - Name: The Great Gatsby, Available Copies: 5.
-Book 2 - Name: To Kill a Mockingbird, Available Copies: 3.
+//Book 1 - Name: The Great Gatsby, Available Copies: 5.
+//Book 2 - Name: To Kill a Mockingbird, Available Copies: 3.
+$book1 = new Book("The Great Gatsby", 5);
+$book2 = new Book("To Kill a Mockingbird", 3);
 
 
 
 // TODO: Create 2 members with the following properties
-Member 1 - Name: John Doe
-Member 2 - Name: Jane Smith
+//Member 1 - Name: John Doe
+//Member 2 - Name: Jane Smith
+
+$member1 = new Member("John Doe");
+$member2 = new Member("Jane Smith");
 
 
 
 // TODO: Apply Borrow book method to each member
 
+if ($member1->borrowBook($book1)) {
+    echo $member1->getName() . " borrowed " . $book1->getTitle() . "\n";
+} else {
+    echo "Sorry, " . $book1->getTitle() . " is not available.\n";
+}
 
+
+if ($member2->borrowBook($book2)) {
+    echo $member2->getName() . " borrowed " . $book2->getTitle() . "\n";
+} else {
+    echo "Sorry, " . $book2->getTitle() . " is not available.\n";
+}
 
 // TODO: Print Available Copies with their names:
 
 
+echo "Available Copies of "."'".$book1->getTitle() ."'". ": " . $book1->getAvailableCopies() . " \n";
+echo "Available Copies of "."'".$book2->getTitle() ."'". ": " . $book2->getAvailableCopies() . " \n";
+
+//Available Copies of 'The Great Gatsby': 4
+//Available Copies of 'To Kill a Mockingbird': 2
 ?>
